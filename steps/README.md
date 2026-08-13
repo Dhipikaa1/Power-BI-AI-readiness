@@ -15,11 +15,14 @@ the agent applies. Nothing is written to the model or report without your sign-o
 | # | Step | Audit (agent proposes) | You review |
 |---|------|------------------------|-----------|
 | 1 | [Cleanup](01-cleanup/prompt.md) | Excel audit of unused / dependent objects (8 data sources) | Which items are safe to delete |
-| 2 | [Optimize](02-optimize/prompt.md) | Data types, relationships, DAX, date table findings | Structural changes |
+| 2 | [Optimize](02-optimize/prompt.md) | 10-sheet relationship & structure analysis (M:M, BiDi, 15-point checklist) | Which fixes to apply |
 | 3 | [BPA](03-bpa/prompt.md) | Violations against AI-readiness rules | The fix backlog |
-| 4 | [Describe](04-describe/prompt.md) | Draft descriptions + synonyms | Business accuracy |
-| 5 | [Rename](05-rename/prompt.md) | Old → new rename map (+ hide keys, format strings) | The rename map |
+| 4 | [Describe](04-describe/prompt.md) | Glossary-driven descriptions (CSV) | Business accuracy |
+| 5 | [Rename](05-rename/prompt.md) | Glossary-driven rename map (CSV old → new) | The rename map |
 | 6 | [Score](06-score/prompt.md) | Before/after AI-Readiness Score | The delta |
+
+> A **business glossary** grounds Describe & Rename so the agent never guesses —
+> see [glossary-template.md](glossary-template.md).
 
 ## How these map to the human ↔ agent workflow
 

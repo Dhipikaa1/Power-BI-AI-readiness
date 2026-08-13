@@ -1,35 +1,60 @@
-# Step 4 — Describe
+# Step 4 — Describe  (Audit → Review → Apply)
 
-**Goal:** give every visible object a concise, AI-useful description and synonyms.
+**Goal:** give every table, column, and measure a concise, business-friendly description —
+grounded in a **glossary**, never invented.
 
-## Prompt
+1. **Generate** — the agent drafts descriptions as a CSV. No model changes.
+2. **Review** — you check them against the business (this is where accuracy matters most).
+3. **Apply** — the agent writes the approved descriptions (and synonyms) to the model.
+
+Provide a **business glossary** (abbreviations → meaning). A starter template is in
+[../glossary-template.md](../glossary-template.md).
+
+---
+
+## Phase A — Generate prompt (CSV only, no model changes)
 
 ```text
-You are a Power BI semantic-model engineer working through the Power BI Modeling MCP.
+You are a Power BI semantic model expert.
 
-Task: Draft descriptions and synonyms for every VISIBLE table, column, and measure that is
-missing one. Do not invent business meaning — use the DAX, data type, name, and the context
-I provide; where a metric is ambiguous, ask me.
+Analyze the connected semantic model.
 
-Rules for each description:
-- 1–2 sentences, plain business English, front-load the key meaning (Copilot reads ~200 chars).
-- State units and grain where relevant (USD, %, per order line).
-- For measures, note preferred usage and how it differs from similar measures.
-- Add 2–5 synonyms per object (the words users actually say: Revenue = Sales = Turnover).
+Use the provided glossary strictly to interpret abbreviations and context for
+generating descriptions.
 
-Output a review table: object, proposed description, proposed synonyms. Wait for my approval,
-then write the approved descriptions + synonyms to the model via MCP.
+Instructions:
+1. Understand the business meaning of each table and column
+2. Do NOT rename anything
+3. Do NOT infer beyond the given context
+4. If unclear, give a generic but safe description
+
+Focus on:
+- Business meaning
+- Relationships context
+- Technical logic
+
+Generate business-friendly descriptions for:
+- Tables (including calculated)
+- Columns (including calculated)
+- Measures
+
+Guidelines:
+- Expand abbreviations using the glossary
+- Keep it concise (Copilot reads ~200 characters — front-load the meaning)
+
+Output STRICTLY in CSV format:
+Object Type,Table Name,Column Name,Object Name,Description
 ```
 
-## You review
-- Descriptions for accuracy (this is where business context matters most).
-- Synonyms — add any team-specific vocabulary.
+## Phase B — Review (you)
+Check the CSV against the glossary and business reality. Edit any description; this is
+the highest-value human checkpoint.
 
-## Example (from the sample model)
+## Phase C — Apply prompt (only after you approve)
 
-```tmdl
-/// Total gross sales in USD across all transactions. Primary revenue KPI.
-measure 'Total Sales' = SUM(Sales[Sales Amount])
-    formatString: \$#,##0.00
-    annotation Synonyms = Revenue, Total Revenue, Sales
+```text
+Write the approved descriptions from the CSV to the connected model via the Power BI
+Modeling MCP (table / column / measure Update → description). Optionally add synonyms
+from the glossary. Do NOT rename anything and do NOT change any other property.
+Report how many objects were updated.
 ```
