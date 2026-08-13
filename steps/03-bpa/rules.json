@@ -57,6 +57,48 @@
       "scope": "Table, Column, Measure",
       "test": "No synonyms defined",
       "why": "Synonyms let users ask in their own words (Revenue = Sales)."
+    },
+    {
+      "id": "DISCOURAGE_IMPLICIT_MEASURES",
+      "severity": "error",
+      "scope": "Model",
+      "test": "discourageImplicitMeasures = false",
+      "why": "Stops Copilot from silently auto-aggregating raw columns instead of your measures."
+    },
+    {
+      "id": "MDX_AVAILABLE_REVIEWED",
+      "severity": "info",
+      "scope": "Model",
+      "test": "isMdxAvailable not reviewed",
+      "why": "Controls Excel pivot / MDX behavior; set intentionally for AI + Excel consumers."
+    },
+    {
+      "id": "NO_AUTO_DATE_TABLES",
+      "severity": "warning",
+      "scope": "Table",
+      "test": "Name matches ^(LocalDateTable_|DateTableTemplate_)",
+      "why": "Auto date tables clutter the model; use one proper marked date dimension."
+    },
+    {
+      "id": "SORT_BY_COLUMN_SET",
+      "severity": "warning",
+      "scope": "Column",
+      "test": "Name is a month/day name and SortByColumn is empty",
+      "why": "Without SortByColumn, AI output orders months/days alphabetically."
+    },
+    {
+      "id": "DAX_USE_DIVIDE",
+      "severity": "warning",
+      "scope": "Measure",
+      "test": "Expression uses bare / instead of DIVIDE()",
+      "why": "DIVIDE() handles divide-by-zero gracefully for clean AI answers."
+    },
+    {
+      "id": "DAX_USE_KEEPFILTERS",
+      "severity": "info",
+      "scope": "Measure",
+      "test": "Expression uses FILTER() where KEEPFILTERS() would be safe",
+      "why": "KEEPFILTERS() is cleaner and faster than FILTER() over a full table."
     }
   ]
 }

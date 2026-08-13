@@ -83,7 +83,7 @@ powerbi-ai-readiness/
 ├── steps/                  # The 6 prompts (+ BPA rules)
 │   ├── 01-cleanup/  02-optimize/  03-bpa/
 │   └── 04-describe/ 05-rename/    06-score/
-├── scoring/                # ai_readiness_score.py (0–100, no dependencies)
+├── scoring/                # AI_Readiness_Score.ipynb (live, sempy) + ai_readiness_score.py (offline TMDL)
 ├── sample-model/           # before/ + after/ TMDL definitions
 │   ├── before/  (score 12.6)
 │   └── after/   (score 98.5)

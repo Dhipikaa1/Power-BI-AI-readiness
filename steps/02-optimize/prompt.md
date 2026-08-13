@@ -39,9 +39,12 @@ PHASE 1: CONNECT & INVENTORY (MCP tools) — run ALL, skip none
   1.3  List ALL tables and classify each: Fact, Fact(Aggregate), Dimension, Bridge,
        Field Parameter, Measures-Only, Utility, Reference/Mapping, Date Dimension,
        Disconnected, Auto-generated (LocalDateTable_*).
-  1.4  Model properties (discourageImplicitMeasures must be TRUE; discourageReportMeasures;
-       culture; defaultMode).
+  1.4  Model properties (discourageImplicitMeasures must be TRUE — prevents Copilot
+       auto-aggregation; isMdxAvailable — review/set for Excel pivot/MDX behavior;
+       discourageReportMeasures; culture; defaultMode).
   1.5  All measures + DAX; flag USERELATIONSHIP / CROSSFILTER / TREATAS; note owning table.
+       DAX hygiene: flag `/` division (should be DIVIDE() for divide-by-zero safety) and
+       FILTER() that could be KEEPFILTERS() where safe.
   1.6  Security roles (RLS) + table filter expressions; flag relationships used in RLS.
   1.7  Calculation groups + items.
   1.8  Columns for M:M / bridge / BiDi tables (name, dataType, isHidden, sortByColumn).
@@ -63,9 +66,11 @@ PHASE 3: GENERATE EXCEL (openpyxl) — EXACTLY these 10 sheets, professional for
      exception), each with model+DAX changes, report impact, pros/cons, and one marked
      "YES — BEST".
   6  Report-Level Measures — "INVISIBLE to Copilot"; DAX, tables referenced, migration priority.
-  7  15-Point Checklist — M:M=0, BiDi=0, hub tables, uniqueness, blank keys, description %,
-     naming, hidden IDs, format strings, discourageImplicitMeasures=TRUE, inactive rels,
-     circular paths, sort-by, synonyms (FAIL/WARN/PASS colored).
+  7  AI-Readiness Checklist — M:M=0, BiDi=0, hub tables, uniqueness, blank keys, description %,
+     naming, hidden IDs, format strings, discourageImplicitMeasures=TRUE, isMdxAvailable
+     reviewed, no auto-date tables (LocalDateTable_*), sort-by-column set on month/day names,
+     synonyms defined, DAX uses DIVIDE() (no bare `/`), DAX uses KEEPFILTERS() over FILTER()
+     where safe, inactive rels, circular paths (FAIL/WARN/PASS colored).
   8  Report Impact — per page: change applied, impact level, visuals affected, needs recreation?
   9  Action Plan — P0/P1/P2/P3 in dependency order; risk; status = Not Started.
   10 Model Diagram — ASCII star schema, M:M/BiDi areas, recommendations (Consolas).
@@ -89,6 +94,8 @@ Work the **Fix Suggestions** and **Action Plan** sheets: choose one approach per
 Apply ONLY the relationship fixes I approved (per the Fix Suggestions sheet), via the Power
 BI Modeling MCP: set crossFilteringBehavior to OneDirection, resolve M:M with the chosen
 approach, deactivate/activate relationships as decided, set discourageImplicitMeasures=TRUE,
-and migrate any report-level measures into the model. After each change, re-validate the
-model and the affected report pages, and report exactly what changed.
+review isMdxAvailable, remove auto-date tables in favor of a proper date dimension, apply DAX
+hygiene (DIVIDE() over `/`, KEEPFILTERS() over FILTER()) where safe, set sort-by-column on
+month/day name columns, and migrate any report-level measures into the model. After each
+change, re-validate the model and the affected report pages, and report exactly what changed.
 ```

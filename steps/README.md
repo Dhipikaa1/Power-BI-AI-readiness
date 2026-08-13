@@ -19,7 +19,7 @@ the agent applies. Nothing is written to the model or report without your sign-o
 | 3 | [BPA](03-bpa/prompt.md) | Violations against AI-readiness rules | The fix backlog |
 | 4 | [Describe](04-describe/prompt.md) | Glossary-driven descriptions (CSV) | Business accuracy |
 | 5 | [Rename](05-rename/prompt.md) | Glossary-driven rename map (CSV old → new) | The rename map |
-| 6 | [Score](06-score/prompt.md) | Before/after AI-Readiness Score | The delta |
+| 6 | [Score](06-score/prompt.md) | Before/after AI-Readiness Score (sempy notebook, 7 categories, or offline TMDL) | The delta |
 
 > A **business glossary** grounds Describe & Rename so the agent never guesses —
 > see [glossary-template.md](glossary-template.md).
