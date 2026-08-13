@@ -1,17 +1,25 @@
 # The 6 Steps
 
-Each step is **prompt-driven**: you run the prompt with **GitHub Copilot (agent mode)** against your
-model through the **Power BI Modeling MCP** (or paste it into your LLM of choice). You review the
-proposed changes, then approve — the agent applies them to the model (and, where relevant, the report).
+Each step is **prompt-driven** and follows one non-negotiable pattern:
 
-| # | Step | What it does | You review |
-|---|------|--------------|-----------|
-| 1 | [Cleanup](01-cleanup/prompt.md) | Find dead measures, hidden-but-unused columns, orphan tables | Deletions |
-| 2 | [Optimize](02-optimize/prompt.md) | Simplify DAX, fix relationships, set data types | Model changes |
-| 3 | [BPA](03-bpa/prompt.md) | Run AI-readiness Best Practice rules | Violations list |
-| 4 | [Describe](04-describe/prompt.md) | Generate descriptions + synonyms for tables/columns/measures | Descriptions |
-| 5 | [Rename](05-rename/prompt.md) | Business-friendly names; hide keys; set format strings | Rename map |
-| 6 | [Score](06-score/prompt.md) | Compute the AI-Readiness Score (0–100) | Before/after report |
+> ## Audit → Review → Apply
+> 1. **Audit** — the agent *analyzes only* and produces a report / proposal. **It changes nothing.**
+> 2. **Review** — *you* read it and approve exactly what should happen.
+> 3. **Apply** — the agent executes *only what you approved*, via the Power BI Modeling MCP,
+>    then re-validates that nothing broke.
+
+You run each prompt with **GitHub Copilot (agent mode)** against your model through the
+**Power BI Modeling MCP** (or paste it into your LLM of choice). The agent proposes; you approve;
+the agent applies. Nothing is written to the model or report without your sign-off.
+
+| # | Step | Audit (agent proposes) | You review |
+|---|------|------------------------|-----------|
+| 1 | [Cleanup](01-cleanup/prompt.md) | Excel audit of unused / dependent objects (8 data sources) | Which items are safe to delete |
+| 2 | [Optimize](02-optimize/prompt.md) | Data types, relationships, DAX, date table findings | Structural changes |
+| 3 | [BPA](03-bpa/prompt.md) | Violations against AI-readiness rules | The fix backlog |
+| 4 | [Describe](04-describe/prompt.md) | Draft descriptions + synonyms | Business accuracy |
+| 5 | [Rename](05-rename/prompt.md) | Old → new rename map (+ hide keys, format strings) | The rename map |
+| 6 | [Score](06-score/prompt.md) | Before/after AI-Readiness Score | The delta |
 
 ## How these map to the human ↔ agent workflow
 
