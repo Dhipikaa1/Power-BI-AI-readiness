@@ -87,6 +87,7 @@ powerbi-ai-readiness/
 ├── sample-model/           # before/ + after/ TMDL definitions
 │   ├── before/  (score 12.6)
 │   └── after/   (score 98.5)
+├── sample-results/         # real audit Excels from running steps 1 & 2 on the before model
 ├── results/                # before.json / after.json (scorer output)
 ├── docs/                   # overview · architecture · before-after · images
 ├── LICENSE  ·  .gitignore  ·  requirements.txt
