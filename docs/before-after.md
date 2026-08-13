@@ -58,6 +58,22 @@ in Fabric; the numbers below were produced by running its exact logic on the bef
 recognizes. Description Coverage caps at 75 by design — hidden surrogate keys have no
 descriptions but still count in the denominator.*
 
+### Scorecards (as the notebook renders them)
+
+**Before — 67.5 / 100 (D)**
+
+![Before AI-Readiness scorecard](images/scorecard-before.png)
+
+**After — 96.4 / 100 (A)**
+
+![After AI-Readiness scorecard](images/scorecard-after.png)
+
+*These are the sempy notebook's own visual scorecard (`scoring/AI_Readiness_Score.ipynb`),
+reproduced from the before/after TMDL. The interactive HTML versions are in
+[`images/scorecard-before.html`](images/scorecard-before.html) and
+[`images/scorecard-after.html`](images/scorecard-after.html); regenerate with
+`py -3 _build_scorecards.py`.*
+
 ## What actually changed
 
 | | Before | After |
