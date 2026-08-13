@@ -1,0 +1,37 @@
+table dim_cust
+
+	column cust_id
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: cust_id
+
+	column cust_nm
+		dataType: string
+		summarizeBy: none
+		sourceColumn: cust_nm
+
+	column cty
+		dataType: string
+		summarizeBy: none
+		sourceColumn: cty
+
+	column seg
+		dataType: string
+		summarizeBy: none
+		sourceColumn: seg
+
+	partition dim_cust = m
+		mode: import
+		source =
+				let
+					Source = #table(
+						type table [cust_id = Int64.Type, cust_nm = text, cty = text, seg = text],
+						{
+							{101, "Contoso North", "Seattle", "Enterprise"},
+							{102, "Fabrikam Retail", "Austin", "SMB"},
+							{103, "Adventure Cycles", "Denver", "Enterprise"},
+							{104, "Wingtip Goods", "Miami", "SMB"}
+						}
+					)
+				in
+					Source

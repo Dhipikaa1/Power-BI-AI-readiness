@@ -1,0 +1,68 @@
+{
+  "model": "ContosoRetailMini.SemanticModel",
+  "counts": {
+    "tables": 4,
+    "visible_columns": 13,
+    "measures": 4,
+    "key_columns": 7,
+    "relationships": 3
+  },
+  "breakdown": {
+    "measure_descriptions": {
+      "coverage": 1.0,
+      "weight": 14,
+      "points": 14.0
+    },
+    "column_descriptions": {
+      "coverage": 1.0,
+      "weight": 12,
+      "points": 12.0
+    },
+    "table_descriptions": {
+      "coverage": 1.0,
+      "weight": 8,
+      "points": 8.0
+    },
+    "business_friendly_names": {
+      "coverage": 1.0,
+      "weight": 14,
+      "points": 14.0
+    },
+    "keys_hidden": {
+      "coverage": 1.0,
+      "weight": 8,
+      "points": 8.0
+    },
+    "keys_summarize_none": {
+      "coverage": 1.0,
+      "weight": 5,
+      "points": 5.0
+    },
+    "measure_format_strings": {
+      "coverage": 1.0,
+      "weight": 7,
+      "points": 7.0
+    },
+    "synonyms": {
+      "coverage": 0.81,
+      "weight": 8,
+      "points": 6.5
+    },
+    "date_table_marked": {
+      "coverage": 1.0,
+      "weight": 8,
+      "points": 8.0
+    },
+    "single_direction_relationships": {
+      "coverage": 1.0,
+      "weight": 8,
+      "points": 8.0
+    },
+    "correct_types": {
+      "coverage": 1.0,
+      "weight": 8,
+      "points": 8.0
+    }
+  },
+  "score": 98.5
+}

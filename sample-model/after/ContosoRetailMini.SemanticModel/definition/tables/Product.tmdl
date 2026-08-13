@@ -1,0 +1,51 @@
+/// Product catalog. One row per product. Use for product, category, and subcategory analysis.
+table Product
+
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: prod_id
+
+	/// Product name as shown to business users.
+	column Product
+		dataType: string
+		summarizeBy: none
+		sourceColumn: prod_nm
+
+		annotation Synonyms = Item, SKU, Product Name
+
+	/// Top-level product category (e.g. Bikes, Accessories, Clothing).
+	column Category
+		dataType: string
+		summarizeBy: none
+		sourceColumn: cat
+
+		annotation Synonyms = Product Category, Group
+
+	/// Product subcategory within a category.
+	column Subcategory
+		dataType: string
+		summarizeBy: none
+		sourceColumn: subcat
+
+		annotation Synonyms = Sub Category, Subgroup
+
+	partition dim_prod = m
+		mode: import
+		source =
+				let
+					Source = #table(
+						type table [prod_id = Int64.Type, prod_nm = text, cat = text, subcat = text],
+						{
+							{201, "Mountain Bike 200", "Bikes", "Mountain"},
+							{202, "Water Bottle", "Accessories", "Hydration"},
+							{203, "Road Helmet", "Accessories", "Safety"},
+							{204, "Cycling Gloves", "Clothing", "Gloves"}
+						}
+					)
+				in
+					Source
+
+	annotation Synonyms = Items, Catalog, SKUs
+

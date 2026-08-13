@@ -1,0 +1,66 @@
+table fct_sls
+
+	column sls_id
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: sls_id
+
+	column cust_id
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: cust_id
+
+	column prod_id
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: prod_id
+
+	column dt_ky
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: dt_ky
+
+	column txn_amt
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: txn_amt
+
+	column qty
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: qty
+
+	column disc_pct
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: disc_pct
+
+	measure m_ttl_sls = SUM(fct_sls[txn_amt])
+
+	measure m_ttl_qty = SUM(fct_sls[qty])
+
+	measure m_avg_disc = AVERAGE(fct_sls[disc_pct])
+
+	measure m_sls_ytd = TOTALYTD([m_ttl_sls], dim_dt[dt])
+
+	measure m_tmp_old = SUMX(fct_sls, fct_sls[txn_amt] * 1)
+
+	partition fct_sls = m
+		mode: import
+		source =
+				let
+					Source = #table(
+						type table [sls_id = Int64.Type, cust_id = Int64.Type, prod_id = Int64.Type, dt_ky = Int64.Type, txn_amt = number, qty = Int64.Type, disc_pct = number],
+						{
+							{1, 101, 201, 20240101, 1200.00, 3, 0.05},
+							{2, 102, 202, 20240102, 340.50, 1, 0.00},
+							{3, 101, 203, 20240115, 780.00, 2, 0.10},
+							{4, 103, 201, 20240201, 1560.00, 4, 0.05},
+							{5, 104, 204, 20240210, 220.00, 1, 0.00},
+							{6, 102, 202, 20240305, 681.00, 2, 0.00},
+							{7, 103, 203, 20240312, 390.00, 1, 0.10},
+							{8, 104, 201, 20240320, 3120.00, 8, 0.15}
+						}
+					)
+				in
+					Source

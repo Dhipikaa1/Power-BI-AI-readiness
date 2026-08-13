@@ -1,0 +1,62 @@
+{
+  "$schema": "ai-readiness-bpa-rules/1.0",
+  "description": "Best Practice Analyzer rules for Power BI semantic-model AI-readiness.",
+  "rules": [
+    {
+      "id": "MEASURE_HAS_DESCRIPTION",
+      "severity": "error",
+      "scope": "Measure",
+      "test": "Description is null or empty",
+      "why": "Copilot reads measure descriptions to disambiguate metrics."
+    },
+    {
+      "id": "VISIBLE_COLUMN_HAS_DESCRIPTION",
+      "severity": "warning",
+      "scope": "Column",
+      "test": "IsHidden = false and (Description is null or empty)",
+      "why": "Descriptions give AI the meaning names cannot."
+    },
+    {
+      "id": "TABLE_HAS_DESCRIPTION",
+      "severity": "warning",
+      "scope": "Table",
+      "test": "Description is null or empty",
+      "why": "Table descriptions clarify grain and purpose."
+    },
+    {
+      "id": "BUSINESS_FRIENDLY_NAME",
+      "severity": "error",
+      "scope": "Table, Column, Measure",
+      "test": "IsVisible and Name matches ^.*(_|[a-z]{2,}\\d|^[a-z]{1,4}$).*",
+      "why": "AI reads names literally; cryptic names like fct_sls mean nothing."
+    },
+    {
+      "id": "KEY_COLUMN_HIDDEN",
+      "severity": "warning",
+      "scope": "Column",
+      "test": "Name ends with Id/Key/Ky and IsHidden = false",
+      "why": "Surrogate keys pollute the fields AI can choose from."
+    },
+    {
+      "id": "KEY_SUMMARIZEBY_NONE",
+      "severity": "warning",
+      "scope": "Column",
+      "test": "IsKeyLike and SummarizeBy <> None",
+      "why": "Keys and Year should never be summed by default."
+    },
+    {
+      "id": "MEASURE_HAS_FORMAT_STRING",
+      "severity": "warning",
+      "scope": "Measure",
+      "test": "FormatString is null or empty",
+      "why": "Formatting makes AI answers readable ($, %, thousands)."
+    },
+    {
+      "id": "SYNONYMS_DEFINED",
+      "severity": "info",
+      "scope": "Table, Column, Measure",
+      "test": "No synonyms defined",
+      "why": "Synonyms let users ask in their own words (Revenue = Sales)."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+table dim_dt
+
+	column dt_ky
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: dt_ky
+
+	column dt
+		dataType: dateTime
+		formatString: General Date
+		summarizeBy: none
+		sourceColumn: dt
+
+	column yr
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: yr
+
+	column mth
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: mth
+
+	column qtr
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: qtr
+
+	partition dim_dt = m
+		mode: import
+		source =
+				let
+					Source = #table(
+						type table [dt_ky = Int64.Type, dt = DateTime.Type, yr = Int64.Type, mth = Int64.Type, qtr = Int64.Type],
+						{
+							{20240101, #datetime(2024,1,1,0,0,0), 2024, 1, 1},
+							{20240102, #datetime(2024,1,2,0,0,0), 2024, 1, 1},
+							{20240115, #datetime(2024,1,15,0,0,0), 2024, 1, 1},
+							{20240201, #datetime(2024,2,1,0,0,0), 2024, 2, 1},
+							{20240210, #datetime(2024,2,10,0,0,0), 2024, 2, 1},
+							{20240305, #datetime(2024,3,5,0,0,0), 2024, 3, 1},
+							{20240312, #datetime(2024,3,12,0,0,0), 2024, 3, 1},
+							{20240320, #datetime(2024,3,20,0,0,0), 2024, 3, 1}
+						}
+					)
+				in
+					Source

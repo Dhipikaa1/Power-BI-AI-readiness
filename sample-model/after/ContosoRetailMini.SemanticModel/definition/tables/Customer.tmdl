@@ -1,0 +1,51 @@
+/// Customer master. One row per customer account. Use for customer-level analysis and segmentation.
+table Customer
+
+	column 'Customer Key'
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: cust_id
+
+	/// Customer account name as shown to business users.
+	column Customer
+		dataType: string
+		summarizeBy: none
+		sourceColumn: cust_nm
+
+		annotation Synonyms = Client, Account, Buyer
+
+	/// City where the customer is located.
+	column City
+		dataType: string
+		summarizeBy: none
+		sourceColumn: cty
+
+		annotation Synonyms = Town, Location
+
+	/// Sales segment the customer belongs to (e.g. Enterprise, SMB).
+	column Segment
+		dataType: string
+		summarizeBy: none
+		sourceColumn: seg
+
+		annotation Synonyms = Tier, Customer Segment
+
+	partition dim_cust = m
+		mode: import
+		source =
+				let
+					Source = #table(
+						type table [cust_id = Int64.Type, cust_nm = text, cty = text, seg = text],
+						{
+							{101, "Contoso North", "Seattle", "Enterprise"},
+							{102, "Fabrikam Retail", "Austin", "SMB"},
+							{103, "Adventure Cycles", "Denver", "Enterprise"},
+							{104, "Wingtip Goods", "Miami", "SMB"}
+						}
+					)
+				in
+					Source
+
+	annotation Synonyms = Clients, Accounts, Buyers
+

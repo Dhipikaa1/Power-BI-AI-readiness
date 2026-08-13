@@ -1,0 +1,66 @@
+/// Date dimension. One row per calendar day. Marked as the model's date table for time-intelligence.
+table Date
+	dataCategory: Time
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: dt_ky
+
+	/// Calendar date. Primary date column for time-intelligence (YTD, MTD, etc.).
+	column Date
+		dataType: dateTime
+		isUnique
+		formatString: General Date
+		summarizeBy: none
+		sourceColumn: dt
+
+		annotation Synonyms = Calendar Date, Day
+
+	/// Calendar year.
+	column Year
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: yr
+
+		annotation Synonyms = Fiscal Year, Yr
+
+	/// Calendar month number (1-12).
+	column Month
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: mth
+
+		annotation Synonyms = Month Number
+
+	/// Calendar quarter number (1-4).
+	column Quarter
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: qtr
+
+		annotation Synonyms = Qtr
+
+	partition dim_dt = m
+		mode: import
+		source =
+				let
+					Source = #table(
+						type table [dt_ky = Int64.Type, dt = DateTime.Type, yr = Int64.Type, mth = Int64.Type, qtr = Int64.Type],
+						{
+							{20240101, #datetime(2024,1,1,0,0,0), 2024, 1, 1},
+							{20240102, #datetime(2024,1,2,0,0,0), 2024, 1, 1},
+							{20240115, #datetime(2024,1,15,0,0,0), 2024, 1, 1},
+							{20240201, #datetime(2024,2,1,0,0,0), 2024, 2, 1},
+							{20240210, #datetime(2024,2,10,0,0,0), 2024, 2, 1},
+							{20240305, #datetime(2024,3,5,0,0,0), 2024, 3, 1},
+							{20240312, #datetime(2024,3,12,0,0,0), 2024, 3, 1},
+							{20240320, #datetime(2024,3,20,0,0,0), 2024, 3, 1}
+						}
+					)
+				in
+					Source
+
+	annotation Synonyms = Calendar, Dates
+

@@ -1,0 +1,12 @@
+relationship fct_cust
+	crossFilteringBehavior: bothDirections
+	fromColumn: fct_sls.cust_id
+	toColumn: dim_cust.cust_id
+
+relationship fct_prod
+	fromColumn: fct_sls.prod_id
+	toColumn: dim_prod.prod_id
+
+relationship fct_date
+	fromColumn: fct_sls.dt_ky
+	toColumn: dim_dt.dt_ky

@@ -1,0 +1,26 @@
+# Power BI binary / local artifacts (never commit enterprise models)
+# NOTE: the small public sample under sample-model/ IS committed as an openable PBIP.
+*.pbix
+**/.pbi/
+**/localSettings.json
+**/*.abf
+**/cache.abf
+
+# Secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Scorer output is committed intentionally (results/), keep temp out
+*.log

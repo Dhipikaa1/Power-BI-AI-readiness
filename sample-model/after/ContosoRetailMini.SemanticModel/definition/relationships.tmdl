@@ -1,0 +1,12 @@
+relationship fct_cust
+	fromColumn: Sales.'Customer Key'
+	toColumn: Customer.'Customer Key'
+
+relationship fct_prod
+	fromColumn: Sales.'Product Key'
+	toColumn: Product.'Product Key'
+
+relationship fct_date
+	fromColumn: Sales.'Date Key'
+	toColumn: Date.'Date Key'
+
