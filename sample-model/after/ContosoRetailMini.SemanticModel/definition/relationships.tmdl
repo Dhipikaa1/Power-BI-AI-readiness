@@ -1,12 +1,12 @@
 relationship fct_cust
-	fromColumn: Sales.'Customer Key'
-	toColumn: Customer.'Customer Key'
+	fromColumn: 'Fact Sales'.'Customer Key'
+	toColumn: 'Dim Customer'.'Customer Key'
 
 relationship fct_prod
-	fromColumn: Sales.'Product Key'
-	toColumn: Product.'Product Key'
+	fromColumn: 'Fact Sales'.'Product Key'
+	toColumn: 'Dim Product'.'Product Key'
 
 relationship fct_date
-	fromColumn: Sales.'Date Key'
-	toColumn: Date.'Date Key'
+	fromColumn: 'Fact Sales'.'Date Key'
+	toColumn: 'Dim Date'.'Date Key'
 

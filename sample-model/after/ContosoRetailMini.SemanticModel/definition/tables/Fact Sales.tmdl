@@ -1,26 +1,26 @@
 /// Sales transactions at order-line grain. One row per product sold on an order. Primary fact table for revenue analysis.
-table Sales
+table 'Fact Sales'
 
 	/// Total gross sales in USD across all transactions. Primary revenue KPI.
-	measure 'Total Sales' = SUM(Sales[Sales Amount])
+	measure 'Total Sales' = SUM('Fact Sales'[Sales Amount])
 		formatString: $#,##0.00
 
 		annotation Synonyms = Revenue, Total Revenue, Sales
 
 	/// Total number of units sold across all transactions.
-	measure 'Total Quantity' = SUM(Sales[Quantity])
+	measure 'Total Quantity' = SUM('Fact Sales'[Quantity])
 		formatString: #,##0
 
 		annotation Synonyms = Units Sold, Total Units, Volume
 
 	/// Average discount rate across order lines, expressed as a percentage.
-	measure 'Average Discount %' = AVERAGE(Sales[Discount %])
+	measure 'Average Discount %' = AVERAGE('Fact Sales'[Discount %])
 		formatString: 0.0%
 
 		annotation Synonyms = Avg Discount, Average Markdown
 
 	/// Year-to-date total sales in USD, based on the Date table.
-	measure 'Sales YTD' = TOTALYTD([Total Sales], 'Date'[Date])
+	measure 'Sales YTD' = TOTALYTD([Total Sales], 'Dim Date'[Date])
 		formatString: $#,##0.00
 
 		annotation Synonyms = Year to Date Sales, YTD Revenue

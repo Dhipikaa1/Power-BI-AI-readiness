@@ -1,5 +1,5 @@
 /// Product catalog. One row per product. Use for product, category, and subcategory analysis.
-table Product
+table 'Dim Product'
 
 	column 'Product Key'
 		dataType: int64

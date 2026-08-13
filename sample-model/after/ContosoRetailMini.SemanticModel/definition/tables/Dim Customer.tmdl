@@ -1,5 +1,5 @@
 /// Customer master. One row per customer account. Use for customer-level analysis and segmentation.
-table Customer
+table 'Dim Customer'
 
 	column 'Customer Key'
 		dataType: int64

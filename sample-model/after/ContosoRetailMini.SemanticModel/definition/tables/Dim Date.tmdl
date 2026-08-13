@@ -1,5 +1,5 @@
 /// Date dimension. One row per calendar day. Marked as the model's date table for time-intelligence.
-table Date
+table 'Dim Date'
 	dataCategory: Time
 
 	column 'Date Key'

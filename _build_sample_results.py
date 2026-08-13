@@ -431,8 +431,71 @@ def build_relationship():
     return path
 
 
+# =============================================================================
+# Workbook 3 — Rename Map (Step 5 output: before -> after)
+# =============================================================================
+def build_rename_map():
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Rename Map"
+    header(ws, ["Object Type", "Table Name", "Old Name", "New Name", "Reason"])
+    rows = [
+        ("Table", "(model)", "fct_sls", "Fact Sales", "Cryptic prefix; explicit fact role, business-readable"),
+        ("Table", "(model)", "dim_cust", "Dim Customer", "Cryptic prefix; explicit dimension role"),
+        ("Table", "(model)", "dim_prod", "Dim Product", "Cryptic prefix; explicit dimension role"),
+        ("Table", "(model)", "dim_dt", "Dim Date", "Cryptic prefix; explicit date-dimension role"),
+        ("Column", "Fact Sales", "sls_id", "Sale Key", "Surrogate key; readable + hidden"),
+        ("Column", "Fact Sales", "cust_id", "Customer Key", "Foreign key; readable + hidden"),
+        ("Column", "Fact Sales", "prod_id", "Product Key", "Foreign key; readable + hidden"),
+        ("Column", "Fact Sales", "dt_ky", "Date Key", "Foreign key; readable + hidden"),
+        ("Column", "Fact Sales", "txn_amt", "Sales Amount", "Business term for revenue"),
+        ("Column", "Fact Sales", "qty", "Quantity", "Expand abbreviation"),
+        ("Column", "Fact Sales", "disc_pct", "Discount %", "Business term; percentage framing"),
+        ("Column", "Dim Customer", "cust_id", "Customer Key", "Key; readable + hidden"),
+        ("Column", "Dim Customer", "cust_nm", "Customer", "Primary display attribute"),
+        ("Column", "Dim Customer", "cty", "City", "Expand abbreviation"),
+        ("Column", "Dim Customer", "seg", "Segment", "Expand abbreviation"),
+        ("Column", "Dim Product", "prod_id", "Product Key", "Key; readable + hidden"),
+        ("Column", "Dim Product", "prod_nm", "Product", "Primary display attribute"),
+        ("Column", "Dim Product", "cat", "Category", "Expand abbreviation"),
+        ("Column", "Dim Product", "subcat", "Subcategory", "Expand abbreviation"),
+        ("Column", "Dim Date", "dt_ky", "Date Key", "Key; readable + hidden"),
+        ("Column", "Dim Date", "dt", "Date", "Primary date column"),
+        ("Column", "Dim Date", "yr", "Year", "Expand abbreviation"),
+        ("Column", "Dim Date", "mth", "Month", "Expand abbreviation"),
+        ("Column", "Dim Date", "qtr", "Quarter", "Expand abbreviation"),
+        ("Measure", "Fact Sales", "m_ttl_sls", "Total Sales", "Readable metric name"),
+        ("Measure", "Fact Sales", "m_ttl_qty", "Total Quantity", "Readable metric name"),
+        ("Measure", "Fact Sales", "m_avg_disc", "Average Discount %", "Readable metric name"),
+        ("Measure", "Fact Sales", "m_sls_ytd", "Sales YTD", "Readable metric name"),
+    ]
+    for i, row in enumerate(rows, 2):
+        for c, v in enumerate(row, 1):
+            cell = ws.cell(row=i, column=c, value=v)
+            cell.border = THIN
+            cell.alignment = WRAP
+        fill = PASS if row[0] == "Table" else None
+        if fill:
+            ws.cell(row=i, column=1).fill = fill
+    widths(ws, {"A": 12, "B": 14, "C": 12, "D": 20, "E": 50})
+    ws.freeze_panes = "A2"
+
+    # note: m_tmp_old is not renamed — it is deleted in Step 1 (cleanup)
+    n = len(rows) + 3
+    ws.cell(row=n, column=1, value="Note").font = BOLD
+    ws.cell(row=n, column=2,
+            value="m_tmp_old is not renamed — it is removed in Step 1 (cleanup) as a redundant measure.")
+    ws.merge_cells(start_row=n, start_column=2, end_row=n, end_column=5)
+
+    path = os.path.join(OUT, "03_Rename_Map.xlsx")
+    wb.save(path)
+    return path
+
+
 if __name__ == "__main__":
     p1 = build_cleanup()
     p2 = build_relationship()
+    p3 = build_rename_map()
     print("Wrote:", p1)
     print("Wrote:", p2)
+    print("Wrote:", p3)

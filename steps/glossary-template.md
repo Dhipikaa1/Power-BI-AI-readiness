@@ -33,7 +33,7 @@ guesses. Copy this file, fill it in for your domain, and hand it to the agent wi
 
 | Metric | Definition | Not to be confused with |
 |--------|-----------|--------------------------|
-| Total Sales | `SUM(Sales[Sales Amount])` | Net Sales (after returns/discounts) |
+| Total Sales | `SUM('Fact Sales'[Sales Amount])` | Net Sales (after returns/discounts) |
 | Average Discount % | Average of line-level discount rate | Total discount amount |
 
 > Tip: the more precise this glossary, the safer and more consistent the generated

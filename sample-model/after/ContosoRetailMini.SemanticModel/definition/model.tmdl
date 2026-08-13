@@ -5,8 +5,8 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-ref table Sales
-ref table Customer
-ref table Product
-ref table Date
+ref table 'Fact Sales'
+ref table 'Dim Customer'
+ref table 'Dim Product'
+ref table 'Dim Date'
 

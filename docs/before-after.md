@@ -36,11 +36,33 @@ python scoring/ai_readiness_score.py sample-model/after/ContosoRetailMini.Semant
 some single-direction relationships. After scores 81% on synonyms because the scorer
 conservatively doesn't count table-level synonyms, so the total is a realistic 98.5, not 100.)*
 
+## Live scorer (sempy notebook)
+
+The same model, scored with [`scoring/AI_Readiness_Score.ipynb`](../scoring/AI_Readiness_Score.ipynb)
+(7 categories, each 0–100, simple average). This is the scorer that runs against a **live** model
+in Fabric; the numbers below were produced by running its exact logic on the before/after TMDL.
+
+| Category | Before | After |
+|----------|:------:|:-----:|
+| Description Coverage | 0.0 | 75.0 |
+| Naming Quality | 82.8 | 100.0 |
+| Relationship Health | 85.0 | 100.0 |
+| DAX Quality | 70.0 | 100.0 |
+| Column Metadata | 60.0 | 100.0 |
+| Model Structure | 75.0 | 100.0 |
+| Relationship Coverage | 100.0 | 100.0 |
+| **Overall** | **67.5 (D)** | **96.4 (A)** |
+
+*Model Structure reaches 100 because the after tables carry explicit role names
+(`Fact Sales`, `Dim Customer`, `Dim Product`, `Dim Date`) that the notebook's classifier
+recognizes. Description Coverage caps at 75 by design — hidden surrogate keys have no
+descriptions but still count in the denominator.*
+
 ## What actually changed
 
 | | Before | After |
 |---|---|---|
-| Table names | `fct_sls`, `dim_cust`, `dim_prod`, `dim_dt` | `Sales`, `Customer`, `Product`, `Date` |
+| Table names | `fct_sls`, `dim_cust`, `dim_prod`, `dim_dt` | `Fact Sales`, `Dim Customer`, `Dim Product`, `Dim Date` |
 | Measure names | `m_ttl_sls`, `m_avg_disc`, `m_sls_ytd` | `Total Sales`, `Average Discount %`, `Sales YTD` |
 | Column names | `txn_amt`, `disc_pct`, `dt_ky`, `cust_id` | `Sales Amount`, `Discount %`, `Date Key` (hidden), `Customer Key` (hidden) |
 | Descriptions | none | every visible table, column, measure |

@@ -20,7 +20,7 @@ ContosoRetailMini.SemanticModel/definition/
 ├── relationships.tmdl
 └── tables/
     ├── (before) fct_sls · dim_cust · dim_prod · dim_dt
-    └── (after)  Sales · Customer · Product · Date
+    └── (after)  Fact Sales · Dim Customer · Dim Product · Dim Date
 ```
 
 ## Open it in Power BI Desktop (optional)

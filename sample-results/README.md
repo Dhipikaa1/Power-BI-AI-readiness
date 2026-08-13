@@ -8,6 +8,7 @@ each step's **Audit** phase hands you to review before anything is changed.
 |------|-------------|--------|
 | [`01_Cleanup_Dependency_Audit.xlsx`](01_Cleanup_Dependency_Audit.xlsx) | [Step 1 — Cleanup](../steps/01-cleanup/prompt.md) | Object Inventory · Relationships · Dependency Tree · Unused Summary · Optimization |
 | [`02_AI_Readiness_Relationship_Analysis.xlsx`](02_AI_Readiness_Relationship_Analysis.xlsx) | [Step 2 — Optimize](../steps/02-optimize/prompt.md) | 10 sheets: Executive Summary → Model Diagram |
+| [`03_Rename_Map.xlsx`](03_Rename_Map.xlsx) | [Step 5 — Rename](../steps/05-rename/prompt.md) | Rename Map (Object Type · Table · Old → New · Reason) |
 
 ## What they found (before model)
 
